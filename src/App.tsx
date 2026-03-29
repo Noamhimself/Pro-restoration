@@ -1,0 +1,410 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { 
+  Shield, 
+  Phone, 
+  AlertTriangle, 
+  Star, 
+  Quote, 
+  CheckCircle2, 
+  Microscope, 
+  Droplets, 
+  ShieldCheck,
+  Calendar,
+  Menu,
+  X,
+  ChevronRight
+} from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
+
+export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-background text-on-surface selection:bg-primary selection:text-on-primary-container">
+      {/* Top Urgency Strip */}
+      <div className="bg-primary-container/10 border-b border-primary/20 py-2 overflow-hidden whitespace-nowrap z-50 relative">
+        <div className="flex items-center justify-center gap-8 animate-marquee">
+          {[1, 2, 3, 4].map((i) => (
+            <p key={i} className="text-[10px] md:text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary flex items-center">
+              <span className="inline-block w-2 h-2 rounded-full bg-primary mr-2"></span>
+              Critical Warning: Limited inspection slots available this week
+            </p>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <Shield className="text-primary w-6 h-6" />
+            <span className="text-xl font-headline font-extrabold tracking-tighter text-primary uppercase">
+              PRO RESTORATION
+            </span>
+          </div>
+
+          <div className="hidden md:flex gap-8 items-center text-on-surface-variant font-headline font-bold text-sm">
+            <a href="#threats" className="text-primary">Threats</a>
+            <a href="#process" className="hover:text-primary transition-colors">Process</a>
+            <a href="#results" className="hover:text-primary transition-colors">Results</a>
+            <a href="#booking" className="hover:text-primary transition-colors">Booking</a>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <button 
+              className="md:hidden text-on-surface"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="pt-12">
+        {/* Hero Section */}
+        <section className="relative min-h-[800px] flex items-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiNCDAQ-gvKcgJZ_-hoYXRBnMS4lxEWBNiWWXs_v4LZcoqb9Z6QfmdSPBSfuC87RWnVKTenvH77OicJncx0UIpz-A_YWYucZ0xu-Shtbp9PfmMdJRmadQ6O71JeZnDAw-MMoeGbHTB4EHMcvVXoUkRH7PLgL-hi0vPVDItEHAZzHXBEV1md-MO1bmyqRQPlczjKn15fzkGnmfkyMm85vf1f88JuvD0UF3IZDxR90z4y7pt7zFJPjowji475txkealTi2_LYMiPb8wx" 
+              alt="Dark attic" 
+              className="w-full h-full object-cover opacity-40 brightness-50"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-1 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-error-container/20 border border-error/30 text-error text-[10px] font-bold uppercase tracking-widest">
+                <AlertTriangle className="w-3 h-3" />
+                Active Bio-Threat Detected
+              </div>
+              <h1 className="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter leading-[0.9] text-on-surface">
+                Something Is Living In Your <span className="text-primary italic">Attic</span> Right Now.
+              </h1>
+              <p className="text-lg md:text-xl text-on-surface-variant max-w-xl leading-relaxed">
+                Rodents multiply and contaminate the air you breathe. They chew through structural wiring and deposit toxic pathogens. Stop the damage before it's too late.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3].map((i) => (
+                    <img 
+                      key={i}
+                      src={`https://picsum.photos/seed/tech${i}/100/100`} 
+                      alt="User" 
+                      className="w-10 h-10 rounded-full border-2 border-background object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  ))}
+                  <div className="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-background flex items-center justify-center text-[10px] font-bold text-primary">+12k</div>
+                </div>
+                <p className="text-xs text-on-surface-variant self-center font-medium">
+                  <span className="text-on-surface font-bold">12,482</span> Homes Secured This Year
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="glass-card px-4 py-8 md:p-8 rounded-xl shadow-2xl space-y-6 relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 p-4">
+                <div className="w-2 h-2 rounded-full bg-primary urgency-pulse"></div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-2xl font-headline font-bold text-on-surface">Secure Your Inspection</h3>
+                <p className="text-sm text-on-surface-variant">Instant dispatch available for high-risk zones.</p>
+              </div>
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full name</label>
+                  <input 
+                    className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface placeholder:text-slate-500 h-12 px-4 transition-all" 
+                    placeholder="Your Name" 
+                    type="text"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone number</label>
+                  <input 
+                    className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface placeholder:text-slate-500 h-12 px-4 transition-all" 
+                    placeholder="Phone Number" 
+                    type="tel"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Signs of Activity</label>
+                  <select className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface h-12 px-4 appearance-none">
+                    <option>Scratching Noises at Night</option>
+                    <option>Foul Odors / Staining</option>
+                    <option>Visible Rodent Sightings</option>
+                    <option>Electrical Flickering</option>
+                    <option>Preventative Inspection</option>
+                  </select>
+                </div>
+                <button className="w-full bg-primary py-4 rounded-lg font-headline font-black text-sm text-on-primary-container uppercase tracking-widest transition-all hover:brightness-110 active:scale-[0.98] shadow-[0_10px_30px_rgba(88,244,219,0.3)]">
+                  get a free inspection
+                </button>
+                <p className="text-[10px] text-center text-slate-500 font-medium">By clicking, you agree to our Rapid Response Protocol and Terms.</p>
+              </form>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Threat Grid */}
+        <section id="threats" className="py-24 px-6 max-w-7xl mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface">Identify the Hazard</h2>
+            <p className="text-on-surface-variant max-w-2xl mx-auto">Rodents aren't just a nuisance; they are biological and structural threats that escalate daily.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                id: '01',
+                title: 'Electrical Arcing',
+                desc: 'Rodents chew wire insulation to sharpen teeth, causing 25% of all unexplained residential fires.',
+                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuASsWew5avKCsG_BjxOBzopT6zX9-b3sdx9s6zDiWorulFh-nPoFkp9L2eIbii8sh0-UxkxJP4-1iQndLfNTumwbIUuA9iDLCqObv96rF7iT0l9iwvKyHGC6gOOTSTnJV9SwVIJWJERx2G2CP9R0d1o4R4K5CyYemw0cp3LZ8rGY3Uke2SE2RsTxbEX-AXcFGa3l87YAK3pV3HM0fo-MNmiMhPSvJAh4F0ZGdM9U6gqHfsXSn5tX-x50K-pezFP3lnhuTsDNzwkpI1f'
+              },
+              {
+                id: '02',
+                title: 'Aerosolized Pathogens',
+                desc: 'Waste particles enter your HVAC system, spreading Hantavirus and Leptospirosis through your home.',
+                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCQhmX5pACH7RwVXdGPvtPDWRMgn96UqVn8f4s6CsKgg3smsPKkJYe7Al2GxGx7D_KMv9SHjJr0xX3HwO7kij6r_ymQAORLp4cbGl33rI8foKsMSu0rhepQLvWV8gs3qSC7f5bdn5OwRQaBPirKqaN5gmA8xO3Y5_biKusozj3d3nI9JvSTDF4VworytMHM57GfUhTDSCuQi6HtJ7gMLqMRo1R0ENtipQQWUy6E2MhISUWxMaBWvJ6phRf_JxI5AXSiHjTLRbPSdqa0'
+              },
+              {
+                id: '03',
+                title: 'Structural Decay',
+                desc: 'Nesting in insulation destroys its R-value, skyrocketing energy bills and rotting wooden joists.',
+                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIL--JfrnwcUuLq7HrzjnvM9FHvW0Mqc9Vqfi9v6E39Er62EvSSAPtc2d_mBUnpmfkfFdJID4ixlDA7vgQnCubBIxzCQQ_euYM0SCUkrq71RGqet7bR9-HF3KW-BWyD_RYVEsm3o7hF1GVFYSH--9KLC3SQTtGUbnv2ooNUJliEVmtQTxDKNSQfBLODjeM3YWqrslDQbV33cMoHUnn8_yayLyKXP2g7MxWpiN8l8WCi4SR4xnVR5YI5xUsTGWErWAVT7Ae7VAd0oQN'
+              }
+            ].map((threat, idx) => (
+              <motion.div 
+                key={threat.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.2 }}
+                className="group relative bg-surface-container-low rounded-xl overflow-hidden transition-all hover:translate-y-[-8px]"
+              >
+                <div className="h-64 relative overflow-hidden">
+                  <img 
+                    src={threat.img} 
+                    alt={threat.title} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent"></div>
+                </div>
+                <div className="p-8 space-y-4">
+                  <span className="text-primary font-bold text-4xl opacity-20 font-headline">{threat.id}</span>
+                  <h4 className="text-xl font-headline font-extrabold text-on-surface">{threat.title}</h4>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">{threat.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section id="process" className="bg-surface-container-low py-24 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col items-center text-center mb-16 gap-6">
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface">The Sentinel Protocol</h2>
+                <p className="text-on-surface-variant max-w-xl mx-auto">A clinical approach to total eradication and fortification.</p>
+              </div>
+              <div className="bg-primary/10 border border-primary/20 px-8 py-5 rounded-lg inline-block">
+                <div className="flex items-center gap-4 text-left">
+                  <div className="text-5xl font-headline font-black text-primary">100%</div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant leading-tight">
+                    Extraction<br />Success Rate
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+              {[
+                {
+                  id: '01',
+                  title: 'Inspection',
+                  desc: 'Thermal imaging and pheromone tracking to locate every entry point.',
+                  icon: Microscope
+                },
+                {
+                  id: '02',
+                  title: 'Removal',
+                  desc: 'Humane extraction followed by clinical-grade enzyme decontamination.',
+                  icon: Droplets
+                },
+                {
+                  id: '03',
+                  title: 'Fortification',
+                  desc: 'Steel-mesh structural sealing and insulation restoration for life.',
+                  icon: ShieldCheck
+                }
+              ].map((step, idx) => (
+                <div key={step.id} className={`relative p-10 bg-surface text-center md:text-left border-surface-container-highest ${idx === 0 ? 'rounded-l-xl border-r' : idx === 1 ? 'border-r' : 'rounded-r-xl'}`}>
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6 mx-auto md:mx-0">
+                    <step.icon className="w-6 h-6" />
+                  </div>
+                  <h5 className="text-xl font-headline font-bold text-on-surface mb-2">{step.id}. {step.title}</h5>
+                  <p className="text-sm text-on-surface-variant">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Results Section */}
+        <section id="results" className="py-24 px-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-8">
+              <div className="flex items-center gap-1 text-primary">
+                {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-5 h-5 fill-primary" />)}
+                <span className="ml-2 font-bold font-headline text-on-surface">4.9/5 Based on 2,400+ Inspections</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface">Rapid Results.<br />Proven Security.</h2>
+              <div className="space-y-6">
+                {[
+                  {
+                    name: 'James D. • Verified Homeowner',
+                    initials: 'JD',
+                    quote: "I heard scratching at 2 AM. Pro Restoration was there by 9 AM. They found an entire colony I didn't know existed. Worth every penny for the peace of mind."
+                  },
+                  {
+                    name: 'Marta S. • Seattle Resident',
+                    initials: 'MS',
+                    quote: "The cleanup was professional. No smell, no mess, and they sealed every tiny hole. Haven't heard a sound in 6 months."
+                  }
+                ].map((testimonial, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="p-6 bg-surface-container-high rounded-xl relative"
+                  >
+                    <Quote className="absolute top-4 right-4 text-primary/20 w-10 h-10" />
+                    <p className="text-on-surface italic mb-4">"{testimonial.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-[10px] font-black text-primary">{testimonial.initials}</div>
+                      <span className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">{testimonial.name}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative flex justify-center">
+              <div className="relative w-full max-w-md aspect-square rounded-full border border-primary/10 flex items-center justify-center">
+                <motion.div 
+                  animate={{ scale: [1, 1.05, 1], opacity: [0.1, 0.2, 0.1] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute inset-0 border border-primary/20 rounded-full"
+                />
+                <motion.div 
+                  animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.1, 0.05] }}
+                  transition={{ duration: 6, repeat: Infinity }}
+                  className="absolute inset-8 border border-primary/20 rounded-full"
+                />
+                <div className="z-10 bg-primary text-on-primary-container p-12 rounded-full text-center shadow-[0_0_80px_rgba(88,244,219,0.2)] transform hover:scale-105 transition-transform cursor-default">
+                  <ShieldCheck className="w-16 h-16 mb-4 mx-auto" />
+                  <h6 className="text-4xl font-headline font-black leading-none mb-2">10-YEAR</h6>
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] mb-4">Structural Seal</p>
+                  <div className="h-px bg-on-primary-container/20 w-12 mx-auto mb-4"></div>
+                  <p className="text-[10px] font-black uppercase">Guaranteed Immunity</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Rebate Section */}
+        <section id="booking" className="py-24 px-1 md:px-6">
+          <div className="max-w-7xl mx-auto glass-card rounded-2xl px-2 py-8 md:p-12 overflow-hidden relative">
+            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+              <div className="space-y-6">
+                <div className="inline-block px-3 py-1 rounded bg-primary/10 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-widest">Efficiency Rebate</div>
+                <h2 className="text-4xl font-headline font-black text-on-surface">Home Built Before 2000?</h2>
+                <p className="text-lg text-on-surface-variant">You may qualify for up to <span className="text-primary font-bold">75% off insulation rebates</span> when we upgrade your attic's thermal barrier after decontamination.</p>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-sm text-on-surface">
+                    <CheckCircle2 className="text-primary w-4 h-4" />
+                    Instant Utility Credit Eligibility
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-on-surface">
+                    <CheckCircle2 className="text-primary w-4 h-4" />
+                    Lower Monthly Energy Consumption
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-surface-container-highest px-4 py-8 md:p-8 rounded-xl border border-white/5 text-center">
+                <h4 className="text-2xl font-headline font-bold text-on-surface mb-6">Check Qualification</h4>
+                <form className="flex flex-col gap-4 text-left" onSubmit={(e) => e.preventDefault()}>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full Name</label>
+                    <input className="w-full bg-surface border-none rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none" placeholder="Enter full name" type="text" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone Number</label>
+                    <input className="w-full bg-surface border-none rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none" placeholder="(555) 000-0000" type="tel" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Email Address</label>
+                    <input className="w-full bg-surface border-none rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none" placeholder="name@email.com" type="email" />
+                  </div>
+                  <button className="bg-primary text-on-primary-container py-4 rounded-lg font-headline font-black text-sm uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg mt-2">
+                    Check My Rebate
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full py-12 px-8 bg-background border-t border-white/5 flex flex-col items-center gap-6 text-center">
+        <div className="font-headline text-sm font-black text-primary tracking-widest uppercase flex items-center gap-2">
+          <Shield className="w-5 h-5" />
+          PRO RESTORATION
+        </div>
+        <div className="flex flex-wrap justify-center gap-8 text-xs font-headline text-on-surface-variant uppercase tracking-widest font-bold">
+          <a href="#" className="hover:text-primary transition-colors">Privacy Protocol</a>
+          <a href="#" className="hover:text-primary transition-colors">Service Terms</a>
+          <a href="#" className="hover:text-primary transition-colors">Guarantee</a>
+          <a href="#" className="hover:text-primary transition-colors">Certifications</a>
+        </div>
+        <p className="text-[10px] text-on-surface-variant max-w-md leading-relaxed">
+          © 2024 CLINICAL SENTINEL RESTORATION. CERTIFIED BIOHAZARD RESPONSE. LICENSE #BH-98210-A. PROTECTING HOMES FROM BIOLOGICAL THREATS WITH MILITARY PRECISION.
+        </p>
+      </footer>
+
+      {/* Mobile Sticky CTA */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 z-50 bg-gradient-to-t from-background to-transparent pointer-events-none">
+        <button 
+          onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+          className="w-full bg-primary text-on-primary-container py-4 rounded-xl font-headline font-black text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(88,244,219,0.4)] active:scale-[0.98] transition-all pointer-events-auto"
+        >
+          GET FREE INSPECTION
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --font-headline: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #58f4db;
+  --color-primary-container: #28d5bc;
+  --color-on-primary-container: #00433a;
+  --color-background: #0a0e13;
+  --color-surface: #0a0e13;
+  --color-surface-container-low: #0f1419;
+  --color-surface-container: #151a20;
+  --color-surface-container-high: #1b2027;
+  --color-surface-container-highest: #21262e;
+  --color-on-surface: #f4f6fe;
+  --color-on-surface-variant: #a8abb2;
+  --color-error: #ff716c;
+  --color-error-container: #9f0519;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-body;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(27, 32, 39, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(88, 244, 219, 0.1);
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .urgency-pulse {
+    box-shadow: 0 0 0 0 rgba(88, 244, 219, 0.4);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(88, 244, 219, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(88, 244, 219, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(88, 244, 219, 0); }
+  }
+}
