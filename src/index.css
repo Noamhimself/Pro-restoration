@@ -22,7 +22,13 @@
 
 @layer base {
   body {
-    @apply bg-background text-on-surface font-body;
+    @apply bg-background text-on-surface font-body relative overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(88, 244, 219, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(88, 244, 219, 0.03) 0%, transparent 50%),
+      linear-gradient(rgba(88, 244, 219, 0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(88, 244, 219, 0.01) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
   }
 }
 
