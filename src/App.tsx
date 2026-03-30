@@ -545,15 +545,15 @@ export default function App() {
                 <form className="flex flex-col gap-4 text-left" onSubmit={handleSubmit}>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full Name</label>
-                    <input className="w-full bg-surface border-none rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none" placeholder="Enter full name" type="text" />
+                    <input className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Enter full name" type="text" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone Number</label>
-                    <input className="w-full bg-surface border-none rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none" placeholder="(555) 000-0000" type="tel" />
+                    <input className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="(555) 000-0000" type="tel" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Email Address</label>
-                    <input className="w-full bg-surface border-none rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none" placeholder="name@email.com" type="email" />
+                    <input className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="name@email.com" type="email" />
                   </div>
                   <button className="bg-primary text-on-primary-container py-4 rounded-lg font-headline font-black text-sm uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg mt-2">
                     Check My Rebate
