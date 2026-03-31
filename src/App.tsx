@@ -97,7 +97,7 @@ export default function App() {
             >
               <div className="aspect-video rounded-xl overflow-hidden border border-white/10 relative">
                 <img 
-                  src="https://picsum.photos/seed/consult/800/450" 
+                  src="https://images.unsplash.com/photo-1516387784550-596f25421ff7?auto=format&fit=crop&q=80&w=800" 
                   alt="Specialist Consultation" 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                   referrerPolicy="no-referrer"
@@ -120,7 +120,7 @@ export default function App() {
             >
               <div className="aspect-video rounded-xl overflow-hidden border border-white/10 relative">
                 <img 
-                  src="https://picsum.photos/seed/assessment/800/450" 
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" 
                   alt="Digital Assessment" 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                   referrerPolicy="no-referrer"
@@ -143,7 +143,7 @@ export default function App() {
             >
               <div className="aspect-video rounded-xl overflow-hidden border border-white/10 relative">
                 <img 
-                  src="https://picsum.photos/seed/restoration/800/450" 
+                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6958?auto=format&fit=crop&q=80&w=800" 
                   alt="Tactical Restoration" 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                   referrerPolicy="no-referrer"
@@ -273,10 +273,14 @@ export default function App() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <div className="flex -space-x-3">
-                  {[1, 2, 3].map((i) => (
+                  {[
+                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100",
+                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100",
+                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100"
+                  ].map((url, i) => (
                     <img 
                       key={i}
-                      src={`https://picsum.photos/seed/tech${i}/100/100`} 
+                      src={url} 
                       alt="User" 
                       className="w-10 h-10 rounded-full border-2 border-background object-cover"
                       referrerPolicy="no-referrer"
@@ -494,6 +498,7 @@ export default function App() {
                   {
                     name: 'S. O. • Renton, WA',
                     initials: 'SO',
+                    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100&h=100',
                     source: 'Yelp',
                     platformColor: '#af0606',
                     stars: 5,
@@ -502,6 +507,7 @@ export default function App() {
                   {
                     name: 'A. B. • Seattle, WA',
                     initials: 'AB',
+                    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=100&h=100',
                     source: 'Google',
                     platformColor: '#4285F4',
                     stars: 5,
@@ -510,6 +516,7 @@ export default function App() {
                   {
                     name: 'K. L. • Bellevue, WA',
                     initials: 'KL',
+                    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=100&h=100',
                     source: 'Yelp',
                     platformColor: '#af0606',
                     stars: 5,
@@ -525,19 +532,27 @@ export default function App() {
                     style={{ borderTopColor: testimonial.platformColor }}
                   >
                     <div className="flex justify-between items-start mb-4">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex gap-0.5">
-                          {[...Array(testimonial.stars)].map((_, i) => (
-                            <Star 
-                              key={i} 
-                              className="w-4 h-4 fill-current" 
-                              style={{ color: testimonial.source === 'Yelp' ? '#af0606' : '#FBBC05' }} 
-                            />
-                          ))}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Verified Review</span>
-                          <CheckCircle2 className="w-3 h-3 text-primary" />
+                      <div className="flex items-center gap-4">
+                        <img 
+                          src={testimonial.avatar} 
+                          alt={testimonial.name} 
+                          className="w-12 h-12 rounded-full border border-white/10 object-cover"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="flex flex-col gap-1">
+                          <div className="flex gap-0.5">
+                            {[...Array(testimonial.stars)].map((_, i) => (
+                              <Star 
+                                key={i} 
+                                className="w-4 h-4 fill-current" 
+                                style={{ color: testimonial.source === 'Yelp' ? '#af0606' : '#FBBC05' }} 
+                              />
+                            ))}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Verified Review</span>
+                            <CheckCircle2 className="w-3 h-3 text-primary" />
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-white/5">
