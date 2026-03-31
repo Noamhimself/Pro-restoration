@@ -99,7 +99,7 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1516387784550-596f25421ff7?auto=format&fit=crop&q=80&w=800" 
                   alt="Specialist Consultation" 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm">01</div>
@@ -122,7 +122,7 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" 
                   alt="Digital Assessment" 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm">02</div>
@@ -145,7 +145,7 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1581578731548-c64695cc6958?auto=format&fit=crop&q=80&w=800" 
                   alt="Tactical Restoration" 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover transition-all duration-500"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm">03</div>
@@ -161,12 +161,12 @@ export default function App() {
 
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4 text-left">
-              <div className="w-10 h-10 rounded-full bg-error-container/20 border border-error/30 flex items-center justify-center">
-                <Phone className="w-5 h-5 text-error animate-pulse" />
+              <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                <ShieldCheck className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-widest font-bold text-error">Emergency Line Active</p>
-                <p className="text-sm font-headline font-bold text-on-surface">Keep your line open for (800) 555-0199</p>
+                <p className="text-[10px] uppercase tracking-widest font-bold text-primary">Response Unit Assigned</p>
+                <p className="text-sm font-headline font-bold text-on-surface">Our team is reviewing your report now.</p>
               </div>
             </div>
             <button 
@@ -229,7 +229,7 @@ export default function App() {
             </div>
             <div className="flex flex-col -space-y-1">
               <span className="text-2xl font-headline font-black tracking-tighter text-on-surface uppercase">
-                ATTIC<span className="text-primary italic">CREW</span>
+                SUPER ATTIC<span className="text-primary italic"> SOLUTION</span>
               </span>
             </div>
           </div>
@@ -502,7 +502,7 @@ export default function App() {
                     source: 'Yelp',
                     platformColor: '#af0606',
                     stars: 5,
-                    quote: "It's 8pm and the Attic Crew has finally wrapped up their day. They got started just about 8:30am. They worked hard, were professional, and did a great job. They cleaned up after themselves and were very respectful of our home."
+                    quote: "It's 8pm and the Super Attic Solution team has finally wrapped up their day. They got started just about 8:30am. They worked hard, were professional, and did a great job. They cleaned up after themselves and were very respectful of our home."
                   },
                   {
                     name: 'A. B. • Seattle, WA',
@@ -520,7 +520,7 @@ export default function App() {
                     source: 'Yelp',
                     platformColor: '#af0606',
                     stars: 5,
-                    quote: "Attic Crew is the real deal. They identified entry points I never would have found and sealed them with steel mesh. The decontamination process was thorough and the smell is completely gone. Highly recommend their tactical approach."
+                    quote: "Super Attic Solution is the real deal. They identified entry points I never would have found and sealed them with steel mesh. The decontamination process was thorough and the smell is completely gone. Highly recommend their tactical approach."
                   }
                 ].map((testimonial, idx) => (
                   <motion.div 
@@ -647,7 +647,7 @@ export default function App() {
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone Number</label>
-                    <input name="phone" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="(555) 000-0000" type="tel" required />
+                    <input name="phone" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Phone Number" type="tel" required />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Email Address</label>
@@ -670,7 +670,7 @@ export default function App() {
             <Zap className="text-on-primary-container w-4 h-4 fill-current" />
           </div>
           <span className="text-xl font-headline font-black tracking-tighter text-on-surface uppercase">
-            ATTIC<span className="text-primary italic">CREW</span>
+            SUPER ATTIC<span className="text-primary italic"> SOLUTION</span>
           </span>
         </div>
         <div className="flex flex-wrap justify-center gap-8 text-xs font-headline text-on-surface-variant uppercase tracking-widest font-bold">
@@ -680,7 +680,7 @@ export default function App() {
           <a href="#" className="hover:text-primary transition-colors">Certifications</a>
         </div>
         <p className="text-[10px] text-on-surface-variant max-w-md leading-relaxed">
-          © 2024 ATTIC CREW TACTICAL RESTORATION. CERTIFIED BIOHAZARD RESPONSE. LICENSE #BH-98210-A. PROTECTING HOMES FROM BIOLOGICAL THREATS WITH MILITARY PRECISION.
+          © 2024 SUPER ATTIC SOLUTION. CERTIFIED BIOHAZARD RESPONSE. LICENSE #BH-98210-A. PROTECTING HOMES FROM BIOLOGICAL THREATS WITH MILITARY PRECISION.
         </p>
       </footer>
 
