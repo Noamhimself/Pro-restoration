@@ -581,9 +581,6 @@ export default function App() {
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-xs font-black text-primary border border-primary/30">
-                          {testimonial.initials}
-                        </div>
                         <div className="flex flex-col">
                           <span className="text-xs font-bold text-on-surface uppercase tracking-widest">{testimonial.name}</span>
                           <span className="text-[9px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Restoration Client</span>
