@@ -27,7 +27,10 @@ export default function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const utms: Record<string, string> = {};
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'].forEach(key => {
+    [
+      'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 
+      'fbclid', 'campaign_id', 'adset_id', 'ad_id'
+    ].forEach(key => {
       const value = params.get(key);
       if (value) utms[key] = value;
     });
@@ -47,18 +50,16 @@ export default function App() {
       form_id: e.currentTarget.id || 'general_contact'
     };
 
-    // Send to webhook if configured
-    const webhookUrl = import.meta.env.VITE_CRM_WEBHOOK_URL;
-    if (webhookUrl) {
-      try {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-      } catch (error) {
-        console.error('Error sending to CRM:', error);
-      }
+    // Send to CRM Webhook
+    const webhookUrl = import.meta.env.VITE_CRM_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/VMV06EXKrBhxxAqzGrDI/webhook-trigger/8918d8e8-753e-4005-a928-d7060db351d0';
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error('Error sending to CRM:', error);
     }
 
     setSubmitted(true);
