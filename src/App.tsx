@@ -18,13 +18,49 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 
 export default function App() {
   const [submitted, setSubmitted] = useState(false);
+  const [utmParams, setUtmParams] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e: FormEvent) => {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const utms: Record<string, string> = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'].forEach(key => {
+      const value = params.get(key);
+      if (value) utms[key] = value;
+    });
+    setUtmParams(utms);
+  }, []);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    
+    const payload = {
+      ...data,
+      ...utmParams,
+      timestamp: new Date().toISOString(),
+      source_url: window.location.href,
+      form_id: e.currentTarget.id || 'general_contact'
+    };
+
+    // Send to webhook if configured
+    const webhookUrl = import.meta.env.VITE_CRM_WEBHOOK_URL;
+    if (webhookUrl) {
+      try {
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch (error) {
+        console.error('Error sending to CRM:', error);
+      }
+    }
+
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -145,7 +181,32 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-on-surface selection:bg-primary selection:text-on-primary-container">
+    <div className="min-h-screen bg-background text-on-surface selection:bg-primary selection:text-on-primary-container relative">
+      {/* Decorative Background Elements */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[15%] left-[-5%] w-[40%] h-[1px] bg-primary/10 rotate-12"></div>
+        <div className="absolute bottom-[20%] right-[-5%] w-[40%] h-[1px] bg-primary/10 -rotate-12"></div>
+        <div className="absolute top-[40%] right-[10%] w-[1px] h-[30%] bg-primary/10"></div>
+        <div className="absolute top-[60%] left-[5%] w-[1px] h-[20%] bg-primary/10"></div>
+        <div className="absolute top-0 left-0 p-4 opacity-20">
+          <div className="text-[10px] font-mono tracking-tighter">LAT: 34.0522 N</div>
+          <div className="text-[10px] font-mono tracking-tighter">LNG: 118.2437 W</div>
+        </div>
+        <div className="absolute bottom-0 right-0 p-4 opacity-20">
+          <div className="text-[10px] font-mono tracking-tighter">SEC: TACTICAL-01</div>
+          <div className="text-[10px] font-mono tracking-tighter">VER: 2.4.0</div>
+        </div>
+        {/* Crosshairs */}
+        <div className="absolute top-1/4 left-1/4 w-4 h-4 border-t border-l border-primary/20"></div>
+        <div className="absolute top-1/4 right-1/4 w-4 h-4 border-t border-r border-primary/20"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-4 h-4 border-b border-l border-primary/20"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-4 h-4 border-b border-r border-primary/20"></div>
+        
+        {/* Additional Decorative Lines */}
+        <div className="absolute top-0 left-1/2 w-[1px] h-full bg-primary/5 -translate-x-1/2"></div>
+        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-primary/5 -translate-y-1/2"></div>
+      </div>
+
       {/* Top Urgency Strip */}
       <div className="bg-primary-container/10 border-b border-primary/20 py-2 overflow-hidden whitespace-nowrap z-50 relative">
         <div className="flex items-center justify-center gap-8 animate-marquee">
@@ -177,6 +238,10 @@ export default function App() {
       <main className="pt-12">
         {/* Hero Section */}
         <section className="relative min-h-[800px] flex items-center overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+            <div className="absolute top-[20%] left-[10%] w-32 h-32 border border-primary/5 rounded-full"></div>
+            <div className="absolute bottom-[10%] right-[15%] w-64 h-64 border border-primary/5 rounded-full"></div>
+          </div>
           <div className="absolute inset-0 z-0">
             <img 
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiNCDAQ-gvKcgJZ_-hoYXRBnMS4lxEWBNiWWXs_v4LZcoqb9Z6QfmdSPBSfuC87RWnVKTenvH77OicJncx0UIpz-A_YWYucZ0xu-Shtbp9PfmMdJRmadQ6O71JeZnDAw-MMoeGbHTB4EHMcvVXoUkRH7PLgL-hi0vPVDItEHAZzHXBEV1md-MO1bmyqRQPlczjKn15fzkGnmfkyMm85vf1f88JuvD0UF3IZDxR90z4y7pt7zFJPjowji475txkealTi2_LYMiPb8wx" 
@@ -228,7 +293,7 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="glass-card px-4 py-8 md:p-8 rounded-xl shadow-2xl space-y-6 relative overflow-hidden"
+              className="glass-card tactical-border px-4 py-8 md:p-8 rounded-xl shadow-2xl space-y-6 relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-4">
                 <div className="w-2 h-2 rounded-full bg-primary urgency-pulse"></div>
@@ -237,34 +302,38 @@ export default function App() {
                 <h3 className="text-2xl font-headline font-bold text-on-surface">Secure Your Inspection</h3>
                 <p className="text-sm text-on-surface-variant">Instant dispatch available for high-risk zones.</p>
               </div>
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form id="hero_inspection_form" className="space-y-4" onSubmit={handleSubmit}>
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full name</label>
                   <input 
+                    name="full_name"
                     className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface placeholder:text-slate-500 h-12 px-4 transition-all" 
                     placeholder="Your Name" 
                     type="text"
+                    required
                   />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone number</label>
                   <input 
+                    name="phone"
                     className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface placeholder:text-slate-500 h-12 px-4 transition-all" 
                     placeholder="Phone Number" 
                     type="tel"
+                    required
                   />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Signs of Activity</label>
-                  <select className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface h-12 px-4 appearance-none">
-                    <option>Scratching Noises at Night</option>
-                    <option>Foul Odors / Staining</option>
-                    <option>Visible Rodent Sightings</option>
-                    <option>Electrical Flickering</option>
-                    <option>Preventative Inspection</option>
+                  <select name="activity_signs" className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface h-12 px-4 appearance-none">
+                    <option value="scratching">Scratching Noises at Night</option>
+                    <option value="odors">Foul Odors / Staining</option>
+                    <option value="sightings">Visible Rodent Sightings</option>
+                    <option value="electrical">Electrical Flickering</option>
+                    <option value="preventative">Preventative Inspection</option>
                   </select>
                 </div>
-                <button className="w-full bg-primary py-4 rounded-lg font-headline font-black text-sm text-on-primary-container uppercase tracking-widest transition-all hover:brightness-110 active:scale-[0.98] shadow-[0_10px_30px_rgba(88,244,219,0.3)]">
+                <button className="w-full bg-primary py-4 rounded-lg font-headline font-black text-sm text-on-primary-container uppercase tracking-widest transition-all hover:brightness-110 active:scale-[0.98] shadow-[0_10px_30px_rgba(88,244,219,0.3)] glow-primary">
                   get a free inspection
                 </button>
                 <p className="text-[10px] text-center text-slate-500 font-medium">By clicking, you agree to our Rapid Response Protocol and Terms.</p>
@@ -274,8 +343,13 @@ export default function App() {
         </section>
 
         {/* Threat Grid */}
-        <section id="threats" className="py-24 px-6 max-w-7xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
+        <div className="tactical-line opacity-40"></div>
+        <section id="threats" className="py-24 px-6 max-w-7xl mx-auto relative">
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-primary/5"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/5 rounded-full blur-[120px] opacity-20"></div>
+          </div>
+          <div className="text-center mb-16 space-y-4 relative z-10">
             <h2 className="text-3xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface">Identify the Hazard</h2>
             <p className="text-on-surface-variant max-w-2xl mx-auto">Rodents aren't just a nuisance; they are biological and structural threats that escalate daily.</p>
           </div>
@@ -328,8 +402,14 @@ export default function App() {
         </section>
 
         {/* Process Section */}
-        <section id="process" className="bg-surface-container-low py-24 px-6">
-          <div className="max-w-7xl mx-auto">
+        <div className="tactical-line opacity-40"></div>
+        <section id="process" className="bg-surface-container-low py-24 px-6 relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none opacity-30">
+            <div className="absolute top-0 left-1/4 w-px h-full bg-primary/5"></div>
+            <div className="absolute top-0 right-1/4 w-px h-full bg-primary/5"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-primary/5 rounded-full blur-[150px] opacity-10"></div>
+          </div>
+          <div className="max-w-7xl mx-auto relative z-10">
             <div className="flex flex-col items-center text-center mb-16 gap-6">
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface">The Sentinel Protocol</h2>
@@ -379,7 +459,11 @@ export default function App() {
         </section>
 
         {/* Results Section */}
-        <section id="results" className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="tactical-line opacity-40"></div>
+        <section id="results" className="py-24 px-6 max-w-7xl mx-auto relative">
+          <div className="absolute top-1/4 right-0 w-32 h-32 border-t border-r border-primary/10 pointer-events-none"></div>
+          <div className="absolute bottom-1/4 left-0 w-32 h-32 border-b border-l border-primary/10 pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/5 rounded-full blur-[120px] opacity-20"></div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-8">
               <div className="flex flex-col md:flex-row items-center gap-6 mb-12">
@@ -521,8 +605,9 @@ export default function App() {
         </section>
 
         {/* Rebate Section */}
-        <section id="booking" className="py-24 px-1 md:px-6">
-          <div className="max-w-7xl mx-auto glass-card rounded-2xl px-2 py-8 md:p-12 overflow-hidden relative">
+        <div className="tactical-line opacity-20"></div>
+        <section id="booking" className="py-24 px-1 md:px-6 relative">
+          <div className="max-w-7xl mx-auto glass-card tactical-border rounded-2xl px-2 py-8 md:p-12 overflow-hidden relative">
             <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
               <div className="space-y-6">
@@ -540,22 +625,22 @@ export default function App() {
                   </li>
                 </ul>
               </div>
-              <div className="bg-surface-container-highest px-4 py-8 md:p-8 rounded-xl border border-white/5 text-center">
+              <div className="bg-surface-container-highest tactical-border px-4 py-8 md:p-8 rounded-xl border border-white/5 text-center">
                 <h4 className="text-2xl font-headline font-bold text-on-surface mb-6">Check Qualification</h4>
-                <form className="flex flex-col gap-4 text-left" onSubmit={handleSubmit}>
+                <form id="rebate_qualification_form" className="flex flex-col gap-4 text-left" onSubmit={handleSubmit}>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full Name</label>
-                    <input className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Enter full name" type="text" />
+                    <input name="full_name" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Enter full name" type="text" required />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone Number</label>
-                    <input className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="(555) 000-0000" type="tel" />
+                    <input name="phone" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="(555) 000-0000" type="tel" required />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Email Address</label>
-                    <input className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="name@email.com" type="email" />
+                    <input name="email" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="name@email.com" type="email" required />
                   </div>
-                  <button className="bg-primary text-on-primary-container py-4 rounded-lg font-headline font-black text-sm uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg mt-2">
+                  <button className="bg-primary text-on-primary-container py-4 rounded-lg font-headline font-black text-sm uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg mt-2 glow-primary">
                     Check My Rebate
                   </button>
                 </form>
