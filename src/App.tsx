@@ -95,21 +95,13 @@ export default function App() {
               transition={{ delay: 0.2 }}
               className="space-y-4 group"
             >
-              <div className="aspect-video rounded-xl overflow-hidden border border-white/10 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1516387784550-596f25421ff7?auto=format&fit=crop&q=80&w=800" 
-                  alt="Specialist Consultation" 
-                  className="w-full h-full object-cover transition-all duration-500"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm">01</div>
-              </div>
-              <div className="space-y-2">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm shrink-0">01</div>
                 <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">Specialist Consultation</h3>
+              </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
                   A restoration specialist will call you within 15 minutes to review your specific threat indicators and verify your location for immediate dispatch.
                 </p>
-              </div>
             </motion.div>
             
             <motion.div 
@@ -118,21 +110,13 @@ export default function App() {
               transition={{ delay: 0.4 }}
               className="space-y-4 group"
             >
-              <div className="aspect-video rounded-xl overflow-hidden border border-white/10 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" 
-                  alt="Digital Assessment" 
-                  className="w-full h-full object-cover transition-all duration-500"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm">02</div>
-              </div>
-              <div className="space-y-2">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm shrink-0">02</div>
                 <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">Digital Threat Report</h3>
+              </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
                   You'll receive a secure link via email containing your structural vulnerability assessment, decontamination quote, and tactical timeline.
                 </p>
-              </div>
             </motion.div>
 
             <motion.div 
@@ -141,21 +125,13 @@ export default function App() {
               transition={{ delay: 0.6 }}
               className="space-y-4 group"
             >
-              <div className="aspect-video rounded-xl overflow-hidden border border-white/10 relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6958?auto=format&fit=crop&q=80&w=800" 
-                  alt="Tactical Restoration" 
-                  className="w-full h-full object-cover transition-all duration-500"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm">03</div>
-              </div>
-              <div className="space-y-2">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm shrink-0">03</div>
                 <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">Tactical Restoration</h3>
+              </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
                   Our certified bio-threat units arrive on-site to execute the Sentinel Protocol: full extraction, aerosol decontamination, and structural fortification.
                 </p>
-              </div>
             </motion.div>
           </div>
 
