@@ -22,6 +22,8 @@ import { useState, useEffect, FormEvent } from 'react';
 
 export default function App() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [utmParams, setUtmParams] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -39,6 +41,8 @@ export default function App() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     
@@ -53,17 +57,24 @@ export default function App() {
     // Send to CRM Webhook
     const webhookUrl = import.meta.env.VITE_CRM_WEBHOOK_URL || 'https://services.leadconnectorhq.com/hooks/VMV06EXKrBhxxAqzGrDI/webhook-trigger/8918d8e8-753e-4005-a928-d7060db351d0';
     try {
-      await fetch(webhookUrl, {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-    } catch (error) {
-      console.error('Error sending to CRM:', error);
-    }
 
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!response.ok) {
+        throw new Error('Failed to submit. Please try again.');
+      }
+
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      console.error('Error sending to CRM:', err);
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -221,7 +232,7 @@ export default function App() {
           </div>
           <div className="absolute inset-0 z-0">
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiNCDAQ-gvKcgJZ_-hoYXRBnMS4lxEWBNiWWXs_v4LZcoqb9Z6QfmdSPBSfuC87RWnVKTenvH77OicJncx0UIpz-A_YWYucZ0xu-Shtbp9PfmMdJRmadQ6O71JeZnDAw-MMoeGbHTB4EHMcvVXoUkRH7PLgL-hi0vPVDItEHAZzHXBEV1md-MO1bmyqRQPlczjKn15fzkGnmfkyMm85vf1f88JuvD0UF3IZDxR90z4y7pt7zFJPjowji475txkealTi2_LYMiPb8wx" 
+              src="https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?auto=format&fit=crop&q=80&w=1920" 
               alt="Dark attic" 
               className="w-full h-full object-cover opacity-40 brightness-50"
               referrerPolicy="no-referrer"
@@ -285,8 +296,9 @@ export default function App() {
               </div>
               <form id="hero_inspection_form" className="space-y-4" onSubmit={handleSubmit}>
                 <div className="space-y-1">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full name</label>
+                  <label htmlFor="hero_full_name" className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full name</label>
                   <input 
+                    id="hero_full_name"
                     name="full_name"
                     className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface placeholder:text-slate-500 h-12 px-4 transition-all" 
                     placeholder="Your Name" 
@@ -295,8 +307,9 @@ export default function App() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone number</label>
+                  <label htmlFor="hero_phone" className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone number</label>
                   <input 
+                    id="hero_phone"
                     name="phone"
                     className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface placeholder:text-slate-500 h-12 px-4 transition-all" 
                     placeholder="Phone Number" 
@@ -305,8 +318,8 @@ export default function App() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Signs of Activity</label>
-                  <select name="activity_signs" className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface h-12 px-4 appearance-none">
+                  <label htmlFor="hero_activity_signs" className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Signs of Activity</label>
+                  <select id="hero_activity_signs" name="activity_signs" className="w-full bg-surface-container-high border border-primary/30 rounded-lg focus:ring-1 focus:ring-primary outline-none text-on-surface h-12 px-4 appearance-none">
                     <option value="scratching">Scratching Noises at Night</option>
                     <option value="odors">Foul Odors / Staining</option>
                     <option value="sightings">Visible Rodent Sightings</option>
@@ -314,9 +327,13 @@ export default function App() {
                     <option value="preventative">Preventative Inspection</option>
                   </select>
                 </div>
-                <button className="w-full bg-primary py-4 rounded-lg font-headline font-black text-sm text-on-primary-container uppercase tracking-widest transition-all hover:brightness-110 active:scale-[0.98] shadow-[0_10px_30px_rgba(88,244,219,0.3)] glow-primary">
-                  get a free inspection
+                <button 
+                  disabled={loading}
+                  className="w-full bg-primary py-4 rounded-lg font-headline font-black text-sm text-on-primary-container uppercase tracking-widest transition-all hover:brightness-110 active:scale-[0.98] shadow-[0_10px_30px_rgba(88,244,219,0.3)] glow-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Processing...' : 'get a free inspection'}
                 </button>
+                {error && <p className="text-xs text-error text-center font-bold">{error}</p>}
                 <p className="text-[10px] text-center text-slate-500 font-medium">By clicking, you agree to our Rapid Response Protocol and Terms.</p>
               </form>
             </motion.div>
@@ -340,19 +357,19 @@ export default function App() {
                 id: '01',
                 title: 'Electrical Arcing',
                 desc: 'Rodents chew wire insulation to sharpen teeth, causing 25% of all unexplained residential fires.',
-                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuASsWew5avKCsG_BjxOBzopT6zX9-b3sdx9s6zDiWorulFh-nPoFkp9L2eIbii8sh0-UxkxJP4-1iQndLfNTumwbIUuA9iDLCqObv96rF7iT0l9iwvKyHGC6gOOTSTnJV9SwVIJWJERx2G2CP9R0d1o4R4K5CyYemw0cp3LZ8rGY3Uke2SE2RsTxbEX-AXcFGa3l87YAK3pV3HM0fo-MNmiMhPSvJAh4F0ZGdM9U6gqHfsXSn5tX-x50K-pezFP3lnhuTsDNzwkpI1f'
+                img: 'https://images.unsplash.com/photo-1590236141070-04870154881f?auto=format&fit=crop&q=80&w=800'
               },
               {
                 id: '02',
                 title: 'Aerosolized Pathogens',
                 desc: 'Waste particles enter your HVAC system, spreading Hantavirus and Leptospirosis through your home.',
-                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCQhmX5pACH7RwVXdGPvtPDWRMgn96UqVn8f4s6CsKgg3smsPKkJYe7Al2GxGx7D_KMv9SHjJr0xX3HwO7kij6r_ymQAORLp4cbGl33rI8foKsMSu0rhepQLvWV8gs3qSC7f5bdn5OwRQaBPirKqaN5gmA8xO3Y5_biKusozj3d3nI9JvSTDF4VworytMHM57GfUhTDSCuQi6HtJ7gMLqMRo1R0ENtipQQWUy6E2MhISUWxMaBWvJ6phRf_JxI5AXSiHjTLRbPSdqa0'
+                img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800'
               },
               {
                 id: '03',
                 title: 'Structural Decay',
                 desc: 'Nesting in insulation destroys its R-value, skyrocketing energy bills and rotting wooden joists.',
-                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIL--JfrnwcUuLq7HrzjnvM9FHvW0Mqc9Vqfi9v6E39Er62EvSSAPtc2d_mBUnpmfkfFdJID4ixlDA7vgQnCubBIxzCQQ_euYM0SCUkrq71RGqet7bR9-HF3KW-BWyD_RYVEsm3o7hF1GVFYSH--9KLC3SQTtGUbnv2ooNUJliEVmtQTxDKNSQfBLODjeM3YWqrslDQbV33cMoHUnn8_yayLyKXP2g7MxWpiN8l8WCi4SR4xnVR5YI5xUsTGWErWAVT7Ae7VAd0oQN'
+                img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800'
               }
             ].map((threat, idx) => (
               <motion.div 
@@ -369,6 +386,7 @@ export default function App() {
                     alt={threat.title} 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent"></div>
                 </div>
@@ -514,6 +532,7 @@ export default function App() {
                           alt={testimonial.name} 
                           className="w-12 h-12 rounded-full border border-white/10 object-cover"
                           referrerPolicy="no-referrer"
+                          loading="lazy"
                         />
                         <div className="flex flex-col gap-1">
                           <div className="flex gap-0.5">
@@ -618,20 +637,24 @@ export default function App() {
                 <h4 className="text-2xl font-headline font-bold text-on-surface mb-6">Check Qualification</h4>
                 <form id="rebate_qualification_form" className="flex flex-col gap-4 text-left" onSubmit={handleSubmit}>
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full Name</label>
-                    <input name="full_name" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Enter full name" type="text" required />
+                    <label htmlFor="rebate_full_name" className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Full Name</label>
+                    <input id="rebate_full_name" name="full_name" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Enter full name" type="text" required />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone Number</label>
-                    <input name="phone" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Phone Number" type="tel" required />
+                    <label htmlFor="rebate_phone" className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Phone Number</label>
+                    <input id="rebate_phone" name="phone" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="Phone Number" type="tel" required />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Email Address</label>
-                    <input name="email" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="name@email.com" type="email" required />
+                    <label htmlFor="rebate_email" className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant px-1">Email Address</label>
+                    <input id="rebate_email" name="email" className="w-full bg-surface-container-high border border-primary/30 rounded-lg h-12 px-4 text-on-surface focus:ring-1 focus:ring-primary outline-none placeholder:text-slate-500 transition-all" placeholder="name@email.com" type="email" required />
                   </div>
-                  <button className="bg-primary text-on-primary-container py-4 rounded-lg font-headline font-black text-sm uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg mt-2 glow-primary">
-                    Check My Rebate
+                  <button 
+                    disabled={loading}
+                    className="bg-primary text-on-primary-container py-4 rounded-lg font-headline font-black text-sm uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg mt-2 glow-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? 'Processing...' : 'Check My Rebate'}
                   </button>
+                  {error && <p className="text-xs text-error text-center font-bold">{error}</p>}
                 </form>
               </div>
             </div>
