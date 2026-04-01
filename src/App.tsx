@@ -251,7 +251,7 @@ export default function App() {
                 <div className="flex -space-x-3">
                   {[
                     "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100",
-                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100",
+                    "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=100&h=100",
                     "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100"
                   ].map((url, i) => (
                     <img 
@@ -492,7 +492,7 @@ export default function App() {
                   {
                     name: 'K. L. • Bellevue, WA',
                     initials: 'KL',
-                    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=100&h=100',
+                    avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=100&h=100',
                     source: 'Yelp',
                     platformColor: '#af0606',
                     stars: 5,
