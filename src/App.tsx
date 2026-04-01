@@ -97,10 +97,10 @@ export default function App() {
             >
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm shrink-0">01</div>
-                <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">Specialist Consultation</h3>
+                <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">We Call</h3>
               </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
-                  A restoration specialist will call you within 15 minutes to review your specific threat indicators and verify your location for immediate dispatch.
+                  A specialist will call you within 15 minutes to discuss your attic concerns and gather initial details for your restoration protocol.
                 </p>
             </motion.div>
             
@@ -112,10 +112,10 @@ export default function App() {
             >
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm shrink-0">02</div>
-                <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">Digital Threat Report</h3>
+                <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">We Book</h3>
               </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
-                  You'll receive a secure link via email containing your structural vulnerability assessment, decontamination quote, and tactical timeline.
+                  We'll schedule a convenient time for our tactical response unit to visit your property for a comprehensive structural assessment.
                 </p>
             </motion.div>
 
@@ -127,10 +127,10 @@ export default function App() {
             >
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-black text-sm shrink-0">03</div>
-                <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">Tactical Restoration</h3>
+                <h3 className="text-lg font-headline font-bold text-primary uppercase tracking-widest">We Arrive for the Free Inspection</h3>
               </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed">
-                  Our certified bio-threat units arrive on-site to execute the Sentinel Protocol: full extraction, aerosol decontamination, and structural fortification.
+                  Our certified team arrives on-site to perform a full structural and biological threat inspection at no cost to you.
                 </p>
             </motion.div>
           </div>
