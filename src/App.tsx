@@ -232,7 +232,7 @@ export default function App() {
           </div>
           <div className="absolute inset-0 z-0">
             <img 
-              src="https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?auto=format&fit=crop&q=80&w=1920" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiNCDAQ-gvKcgJZ_-hoYXRBnMS4lxEWBNiWWXs_v4LZcoqb9Z6QfmdSPBSfuC87RWnVKTenvH77OicJncx0UIpz-A_YWYucZ0xu-Shtbp9PfmMdJRmadQ6O71JeZnDAw-MMoeGbHTB4EHMcvVXoUkRH7PLgL-hi0vPVDItEHAZzHXBEV1md-MO1bmyqRQPlczjKn15fzkGnmfkyMm85vf1f88JuvD0UF3IZDxR90z4y7pt7zFJPjowji475txkealTi2_LYMiPb8wx" 
               alt="Dark attic" 
               className="w-full h-full object-cover opacity-40 brightness-50"
               referrerPolicy="no-referrer"
@@ -357,19 +357,19 @@ export default function App() {
                 id: '01',
                 title: 'Electrical Arcing',
                 desc: 'Rodents chew wire insulation to sharpen teeth, causing 25% of all unexplained residential fires.',
-                img: 'https://images.unsplash.com/photo-1590236141070-04870154881f?auto=format&fit=crop&q=80&w=800'
+                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuASsWew5avKCsG_BjxOBzopT6zX9-b3sdx9s6zDiWorulFh-nPoFkp9L2eIbii8sh0-UxkxJP4-1iQndLfNTumwbIUuA9iDLCqObv96rF7iT0l9iwvKyHGC6gOOTSTnJV9SwVIJWJERx2G2CP9R0d1o4R4K5CyYemw0cp3LZ8rGY3Uke2SE2RsTxbEX-AXcFGa3l87YAK3pV3HM0fo-MNmiMhPSvJAh4F0ZGdM9U6gqHfsXSn5tX-x50K-pezFP3lnhuTsDNzwkpI1f'
               },
               {
                 id: '02',
                 title: 'Aerosolized Pathogens',
                 desc: 'Waste particles enter your HVAC system, spreading Hantavirus and Leptospirosis through your home.',
-                img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800'
+                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCQhmX5pACH7RwVXdGPvtPDWRMgn96UqVn8f4s6CsKgg3smsPKkJYe7Al2GxGx7D_KMv9SHjJr0xX3HwO7kij6r_ymQAORLp4cbGl33rI8foKsMSu0rhepQLvWV8gs3qSC7f5bdn5OwRQaBPirKqaN5gmA8xO3Y5_biKusozj3d3nI9JvSTDF4VworytMHM57GfUhTDSCuQi6HtJ7gMLqMRo1R0ENtipQQWUy6E2MhISUWxMaBWvJ6phRf_JxI5AXSiHjTLRbPSdqa0'
               },
               {
                 id: '03',
                 title: 'Structural Decay',
                 desc: 'Nesting in insulation destroys its R-value, skyrocketing energy bills and rotting wooden joists.',
-                img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800'
+                img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIL--JfrnwcUuLq7HrzjnvM9FHvW0Mqc9Vqfi9v6E39Er62EvSSAPtc2d_mBUnpmfkfFdJID4ixlDA7vgQnCubBIxzCQQ_euYM0SCUkrq71RGqet7bR9-HF3KW-BWyD_RYVEsm3o7hF1GVFYSH--9KLC3SQTtGUbnv2ooNUJliEVmtQTxDKNSQfBLODjeM3YWqrslDQbV33cMoHUnn8_yayLyKXP2g7MxWpiN8l8WCi4SR4xnVR5YI5xUsTGWErWAVT7Ae7VAd0oQN'
               }
             ].map((threat, idx) => (
               <motion.div 
